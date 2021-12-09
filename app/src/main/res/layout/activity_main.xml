@@ -25,19 +25,25 @@
                 android:orientation="horizontal">
                 <EditText
                     android:id="@+id/searchET"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24dp" />
+                    android:textSize="24dp"
+                    android:hint="Search By Book Name"
+                    />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/searchBtn"
-                    android:text="Search" />
+                    android:text="Search"
+                    />
             </LinearLayout>
             <ListView
                 android:id="@+id/dataLV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/black"
+                android:dividerHeight="1dp"
+                />
         </LinearLayout>
     </RelativeLayout>
 
