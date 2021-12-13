@@ -14,13 +14,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         dataLV = findViewById(R.id.dataLV);
         searchET = findViewById(R.id.searchET);
         searchBtn = findViewById(R.id.searchBtn);
+
+        getSupportActionBar().setTitle("Book Repository"); // for set actionbar title
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); // for add back arrow in action bar
+
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), BookDetailsActivity.class);
                 intent.putExtra("selfLink", selfLink);
                 startActivity(intent);
+                registerForContextMenu(dataLV);
+
             }
         });
     }
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Test1", "Came here");
         super.onCreateContextMenu(menu, v, menuInfo);
     }
+
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int itemID = item.getItemId();
@@ -76,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);*/
                 break;
             case R.id.CancelBtn:
-
                 break;
+
         }
         return super.onContextItemSelected(item);
     }
@@ -105,9 +112,16 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < items.length(); i++) {
                     JSONObject item = (JSONObject) items.get(i);
                     JSONObject volumeInfo = item.getJSONObject("volumeInfo");
+                    String id = item.getString("id");
                     String title = volumeInfo.getString("title");
                     String author = volumeInfo.getJSONArray("authors").get(0).toString();
                     String selfLink = item.getString("selfLink");
+                    String pageCount = volumeInfo.getString("pageCount");
+                    String language = volumeInfo.getString("language");
+                    String publishedDate = volumeInfo.getString("publishedDate");
+                    String description = volumeInfo.getString("description");
+
+                    Log.d("xyz", description);
                     Book book = new Book(title, author, selfLink);
                     bookList.add(book);
                 }

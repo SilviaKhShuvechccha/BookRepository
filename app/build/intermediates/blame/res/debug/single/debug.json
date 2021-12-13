@@ -24,12 +24,12 @@
         "source": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
-        "source": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
-    },
-    {
         "merged": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bg_gradient.xml.flat",
         "source": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\src\\main\\res\\drawable\\bg_gradient.xml"
+    },
+    {
+        "merged": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\src\\main\\res\\drawable-v24\\ic_launcher_foreground.xml"
     },
     {
         "merged": "C:\\Users\\HP\\Desktop\\BookRepository\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher_background.png.flat",

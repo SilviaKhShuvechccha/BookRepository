@@ -30,8 +30,8 @@
 20        android:supportsRtl="true"
 20-->C:\Users\HP\Desktop\BookRepository\app\src\main\AndroidManifest.xml:12:9-35
 21        android:testOnly="true"
-22        android:theme="@style/AppTheme" >
-22-->C:\Users\HP\Desktop\BookRepository\app\src\main\AndroidManifest.xml:13:9-40
+22        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+22-->C:\Users\HP\Desktop\BookRepository\app\src\main\AndroidManifest.xml:13:9-67
 23        <activity android:name="com.silvia.bookrepository.BookDetailsActivity" />
 23-->C:\Users\HP\Desktop\BookRepository\app\src\main\AndroidManifest.xml:14:9-66
 23-->C:\Users\HP\Desktop\BookRepository\app\src\main\AndroidManifest.xml:14:19-54

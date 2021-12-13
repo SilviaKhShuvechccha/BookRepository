@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // for add back arrow in action bar
 
         TitleTV = findViewById(R.id.Title);
         SubTitleTV = findViewById(R.id.Subtitle);
@@ -33,6 +35,16 @@ public class BookDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         selfLinkUrl = intent.getStringExtra("selfLink");
         new FetchBookData().execute();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     class FetchBookData extends AsyncTask<String, Void, String> {
