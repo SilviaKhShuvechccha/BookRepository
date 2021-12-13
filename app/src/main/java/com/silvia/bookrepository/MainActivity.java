@@ -3,6 +3,7 @@ package com.silvia.bookrepository;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button searchBtn;
     public ArrayList<Book> bookList;
     private final BookDataSource bookDataSource = new BookDataSource(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         MenuInflater inflater = getMenuInflater();
@@ -71,20 +74,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int itemID = item.getItemId();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Book book = bookList.get(info.position);
-        Log.d("Test2", "Came here");
-        switch(itemID){
+        switch (itemID) {
             case R.id.SaveBtn:
-                boolean isSaved =  bookDataSource.saveBook(book);
-                if(isSaved)
-                    Toast.makeText(this, "Book Saved Successfully", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(this, "Saving Failed", Toast.LENGTH_SHORT).show();
+                try {
+                    boolean isSaved = bookDataSource.saveBook(book);
+                    if (isSaved)
+                        Toast.makeText(this, "Book Saved Successfully", Toast.LENGTH_SHORT).show();
+                    else
+                    {
+                        Toast.makeText(this, "Error Occured Or Data Already available in LocalDb", Toast.LENGTH_SHORT).show();
+                    }
+                } 
+                catch (SQLException e) {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.CancelBtn:
                 break;
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onContextItemSelected(item);
     }
+
     class FetchBooksData extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -125,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     String publishedDate = volumeInfo.getString("publishedDate");
                     String description = volumeInfo.getString("description");
 
-                   // Book book = new Book(title, author, selfLink);
+                    // Book book = new Book(title, author, selfLink);
                     Book book = new Book(id, title, author, selfLink, publishedDate, pageCount, language, description);
                     bookList.add(book);
                 }

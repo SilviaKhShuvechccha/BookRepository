@@ -3,6 +3,7 @@ package com.silvia.bookrepository;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -25,26 +26,33 @@ public class BookDataSource {
     }
 
     public boolean saveBook(Book book) {
-        openConnection();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(BookDatabaseHelper.BOOK_COL_ID, book.getId());
-        contentValues.put(BookDatabaseHelper.BOOK_COL_TITLE, book.getBookTitle());
-        contentValues.put(BookDatabaseHelper.AUTHOR_COL_NAME, book.getAuthorName());
-        contentValues.put(BookDatabaseHelper.SELF_LINK_COL, book.getSelfLink());
-        contentValues.put(BookDatabaseHelper.PUBLISH_DATE_COL, book.getPublishedDate());
-        contentValues.put(BookDatabaseHelper.PAGE_COUNT_COL, book.getPageCount());
-        contentValues.put(BookDatabaseHelper.LANGUAGE_COL, book.getLanguage());
-        contentValues.put(BookDatabaseHelper.DESCRIPTION_COL, book.getDescription());
+        try {
+            openConnection();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(BookDatabaseHelper.BOOK_COL_ID, book.getId());
+            contentValues.put(BookDatabaseHelper.BOOK_COL_TITLE, book.getBookTitle());
+            contentValues.put(BookDatabaseHelper.AUTHOR_COL_NAME, book.getAuthorName());
+            contentValues.put(BookDatabaseHelper.SELF_LINK_COL, book.getSelfLink());
+            contentValues.put(BookDatabaseHelper.PUBLISH_DATE_COL, book.getPublishedDate());
+            contentValues.put(BookDatabaseHelper.PAGE_COUNT_COL, book.getPageCount());
+            contentValues.put(BookDatabaseHelper.LANGUAGE_COL, book.getLanguage());
+            contentValues.put(BookDatabaseHelper.DESCRIPTION_COL, book.getDescription());
 
-        long rowAffacted = db.insert(BookDatabaseHelper.BOOK_TABLE_NAME, null, contentValues);
-        Log.d("rowaffacted", rowAffacted + "");
-        closeConnection();
+            long rowAffacted = db.insert(BookDatabaseHelper.BOOK_TABLE_NAME, null, contentValues);
+            Log.d("rowaffacted", rowAffacted + "");
 
-        if (rowAffacted > 0) {
-            return true;
-        } else {
-            return false;
+            if (rowAffacted > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new SQLException(e.getMessage());
         }
+        finally {
+            closeConnection();
+        }
+
     }
 
     public ArrayList<Book> getAllStudent() {

@@ -54,11 +54,9 @@ public class BookDetailsActivity extends AppCompatActivity {
             Log.d("Details", "came into details");
         } else
         {
-            Log.d("xyz", "else");
             Toast.makeText(this, "Please save it first", Toast.LENGTH_SHORT).show();
 
         }
-
 
     }
 
