@@ -21,22 +21,21 @@ public class BookAdapter extends ArrayAdapter<Book> {
     public long getItemId(int i) {
         return 0;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Book user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row, parent, false);
         }
-        TextView tvName = (TextView) convertView.findViewById(R.id.BookTitle);
-        TextView tvHome = (TextView) convertView.findViewById(R.id.AuthorName);
-        TextView selfLink = (TextView) convertView.findViewById(R.id.SelfLink);
+        TextView tvName = convertView.findViewById(R.id.BookTitle);
+        TextView tvHome = convertView.findViewById(R.id.AuthorName);
+        TextView selfLink = convertView.findViewById(R.id.SelfLink);
         tvName.setText(user.getBookTitle());
         tvHome.setText(user.getAuthorName());
         selfLink.setText(user.getSelfLink());
         return convertView;
     }
-
-
 
 
 }
