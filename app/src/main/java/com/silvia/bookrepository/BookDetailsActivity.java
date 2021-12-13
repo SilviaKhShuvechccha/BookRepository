@@ -3,18 +3,25 @@ package com.silvia.bookrepository;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.icu.text.CaseMap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class BookDetailsActivity extends AppCompatActivity {
-    String selfLinkUrl;
+    String bookId;
     TextView TitleTV, AuthorTV, PublisherTV, PublishedDateTV, SubTitleTV, PageCountTV, AverageRatingTV, RatingCountTV, LanguageTV;
+    private final BookDataSource bookDataSource = new BookDataSource(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +38,30 @@ public class BookDetailsActivity extends AppCompatActivity {
         AverageRatingTV = findViewById(R.id.AverageRating);
         RatingCountTV = findViewById(R.id.RatingsCount);
         LanguageTV = findViewById(R.id.Language);
-
         Intent intent = getIntent();
-        selfLinkUrl = intent.getStringExtra("selfLink");
-        new FetchBookData().execute();
+        bookId = intent.getStringExtra("bookId");
+        // ArrayList<Book> books =  bookDataSource.getAllStudent();
+        //Log.d("totalst", books.size()+" "+ bookId);
+        //new FetchBookData().execute();
+        Book book = bookDataSource.getBook(bookId);
+        if (book != null) {
+            TitleTV.setText(book.getBookTitle());
+            AuthorTV.setText(book.getAuthorName());
+            PublishedDateTV.setText(book.getPublishedDate());
+            PageCountTV.setText(book.getPageCount());
+            LanguageTV.setText(book.getLanguage());
+
+            Log.d("Details", "came into details");
+        } else
+        {
+            Log.d("xyz", "else");
+            Toast.makeText(this, "Please save it first", Toast.LENGTH_SHORT).show();
+
+        }
+
+
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -47,11 +73,11 @@ public class BookDetailsActivity extends AppCompatActivity {
         }
     }
 
-    class FetchBookData extends AsyncTask<String, Void, String> {
+    /*class FetchBookData extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            /* Showing the ProgressBar, Making the main design GONE */
+            *//* Showing the ProgressBar, Making the main design GONE *//*
             findViewById(R.id.loader).setVisibility(View.VISIBLE);
             findViewById(R.id.errorText).setVisibility(View.GONE);
         }
@@ -95,5 +121,5 @@ public class BookDetailsActivity extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 }

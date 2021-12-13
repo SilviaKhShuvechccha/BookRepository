@@ -15,6 +15,14 @@ public class Book {
         AuthorName = authorName;
         SelfLink = selfLink;
     }
+    public Book()
+    {
+
+    }
+    public Book(String b)
+    {
+        Id = b;
+    }
 
     public Book(String id, String bookTitle, String authorName, String selfLink, String publishedDate, String pageCount, String language, String description) {
         Id = id;

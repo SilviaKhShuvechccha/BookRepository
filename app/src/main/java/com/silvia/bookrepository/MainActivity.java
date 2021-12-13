@@ -50,14 +50,13 @@ public class MainActivity extends AppCompatActivity {
         dataLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book book = (Book) parent.getItemAtPosition(position);
-                bookDataSource.saveBook(book);
-
 
                 //boolean saved = bookDataSource.saveBook(book);
                 //Log.d("svinginfo",saved+"");
                 String selfLink = book.getSelfLink();
                 Intent intent = new Intent(getApplicationContext(), BookDetailsActivity.class);
-                intent.putExtra("selfLink", selfLink);
+                //intent.putExtra("selfLink", selfLink);
+                intent.putExtra("bookId", book.getId().trim());
                 startActivity(intent);
                 registerForContextMenu(dataLV);
 
@@ -81,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
         Log.d("Test2", "Came here");
         switch(itemID){
             case R.id.SaveBtn:
-                /*Intent intent = new Intent(this, EditActivity.class);
-                intent.putExtra("student", student);
-                startActivity(intent);*/
+                boolean isSaved =  bookDataSource.saveBook(book);
+                if(isSaved)
+                    Toast.makeText(this, "Book Saved Successfully", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Saving Failed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.CancelBtn:
                 break;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < items.length(); i++) {
                     JSONObject item = (JSONObject) items.get(i);
                     JSONObject volumeInfo = item.getJSONObject("volumeInfo");
-                    //String id = item.getString("id");
+                    String id = item.getString("id");
                     String title = volumeInfo.getString("title");
                     String author = volumeInfo.getJSONArray("authors").get(0).toString();
                     String selfLink = item.getString("selfLink");
@@ -124,9 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     String publishedDate = volumeInfo.getString("publishedDate");
                     String description = volumeInfo.getString("description");
 
-                    Log.d("xyz", description);
                    // Book book = new Book(title, author, selfLink);
-                    Book book = new Book(title, author, selfLink, publishedDate, pageCount, language, description);
+                    Book book = new Book(id, title, author, selfLink, publishedDate, pageCount, language, description);
                     bookList.add(book);
                 }
                 BookAdapter adapter = new BookAdapter(getApplicationContext(), bookList);
